@@ -1,0 +1,32 @@
+{
+  "@context": "https://github.io",
+  "id": "https://xp.reserve",
+  "name": "XP-IMPERI-ROOT-CODEX",
+  "version": "1.0.0",
+  "rpy": {
+    "v": "KERI10JSON00011c_",
+    "t": "rpy",
+    "d": "E_XP_IMPERI_ROOT_HASH_001",
+    "dt": "2024-05-22T12:00:00.000Z",
+    "r": "/oobi/z6Mki6puBSmjTUMfV6yJpnVZny5evAYk13JZK7TFXZ2NrrJU/witness",
+    "a": {
+      "cid": "afybeicezgomih2k34lmfijovowgt7swfcpxad5rtyow3bziats7td74tm",
+      "lei": "506700GE1G29325QX363",
+      "valuation": "7128532680530.00 USD",
+      "collateral": "GDR-BINDING-V1.0-AU-AG",
+      "oobi": "https://xp.reserve"
+    }
+  },
+  "witnesses": [
+    {
+      "id": "did:key:z6Mki6puBSmjTUMfV6yJpnVZny5evAYk13JZK7TFXZ2NrrJU",
+      "url": "https://xp.reserve"
+    }
+  ],
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "verificationMethod": "did:key:z6Mki6puBSmjTUMfV6yJpnVZny5evAYk13JZK7TFXZ2NrrJU",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "[ED25519_DETACHED_SIGNATURE_FROM_IMPERI_ROOT]"
+  }
+}
