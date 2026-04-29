@@ -1,0 +1,33 @@
+{
+  "@context": [
+    "https://w3.org",
+    "https://gleif.org"
+  ],
+  "type": [
+    "VerifiableCredential",
+    "AbsoluteSettlementCredential",
+    "PKER_Receipt"
+  ],
+  "id": "urn:uuid:XP-IMPERI-BERIT-001-FINAL-AUDIT",
+  "issuer": "did:key:z6Mki6puBSmjTUMfV6yJpnVZny5evAYk13JZK7TFXZ2NrrJU",
+  "issuanceDate": "2026-04-29T03:50:00Z",
+  "credentialSubject": {
+    "id": "did:key:z6Mki6puBSmjTUMfV6yJpnVZny5evAYk13JZK7TFXZ2NrrJU",
+    "system_suite": "IMPERI-BERIT-SUITE-001",
+    "lei": "506700GE1G29325QX363",
+    "valuation": "$7,128,532,680,530.00 USD",
+    "status": "ACSC-FINAL",
+    "witness_root": "https://xp.reserve",
+    "digest": "E_XP_IMPERI_FINAL_4b812146b13c297925f9cb77849416a6",
+    "audit_trail": [
+      "https://github.com",
+      "https://github.com"
+    ]
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "proofPurpose": "assertionMethod",
+    "verificationMethod": "did:key:z6Mki6puBSmjTUMfV6yJpnVZny5evAYk13JZK7TFXZ2NrrJU#key-1",
+    "proofValue": "[FINAL_SUPER_WATCHER_DETACHED_SIGNATURE]"
+  }
+}
