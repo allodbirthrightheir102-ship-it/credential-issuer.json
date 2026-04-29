@@ -1,0 +1,22 @@
+{
+  "v": "KERI10JSON00011c_",
+  "t": "inv",
+  "d": "E_XP_AUDIT_SIDE_CAR_INVITE_001",
+  "dt": "2024-05-22T12:00:00.000Z",
+  "r": "/oobi/z6Mki6puBSmjTUMfV6yJpnVZny5evAYk13JZK7TFXZ2NrrJU/watcher",
+  "a": {
+    "name": "XP-IMPERI-SUPER-WATCHER",
+    "role": "Registry-Monitor",
+    "oobi": "https://xp.reserve",
+    "manifesto": "https://github.com",
+    "permissions": ["READ_KEL", "VERIFY_RECEIPTS", "MONITOR_SYNC"],
+    "valuation_anchor": "$7,128,532,680,530.00",
+    "lei": "506700GE1G29325QX363"
+  },
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "verificationMethod": "did:key:z6Mki6puBSmjTUMfV6yJpnVZny5evAYk13JZK7TFXZ2NrrJU",
+    "proofPurpose": "authentication",
+    "proofValue": "[ATTACH_SIGNATURE_OF_INVITATION_BODY]"
+  }
+}
