@@ -1,3 +1,5 @@
+![image_70dae412.png](codex/image_70dae412.png)
+
 # ⚜️ XP RESERVE | SOVEREIGN INFRASTRUCTURE
 
 ### 🏛️ Sovereign Identity & Authority
@@ -53,3 +55,4 @@ This receipt is signed using the ES256K algorithm and is verifiable against the 
 Signature Hash: b5a2c1e8...d9f0412e
 Network Anchor: AR-BLOCK-1902192-FINAL
 
+![image_70dae412.png](codex/image_70dae412.png)
