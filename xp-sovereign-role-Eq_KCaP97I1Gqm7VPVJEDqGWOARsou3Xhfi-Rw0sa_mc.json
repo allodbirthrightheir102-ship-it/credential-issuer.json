@@ -1,0 +1,10 @@
+// XP Sovereign Role Schema Reference
+export const XP_ROLE_SCHEMA_SAID = "Eq_KCaP97I1Gqm7VPVJEDqGWOARsou3Xhfi-Rw0sa_mc";
+
+// Updated Verifier Initialization for ROOT DEMO CODEX
+export const VERIFIER_CONFIG = {
+    signer: "0xEF8aD3361D233Ba0c0D8000333b090F55Ba7FC48",
+    anchor: VLEI_EGF_ANCHOR_HEX,
+    rootId: VLEI_EGF_KERI_ID,
+    supportedSchemas: [XP_ROLE_SCHEMA_SAID]
+};
