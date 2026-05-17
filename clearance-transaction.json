@@ -1,0 +1,11 @@
+{
+  "transactionType": "SovereignCommerceClearance",
+  "payloadId": "IMPERI-BERIT-SUITE-001",
+  "authorityAnchor": "Haggai 2:8",
+  "clearanceStatus": "IMMEDIATE_SETTLEMENT_EXECUTED",
+  "verificationNodes": {
+    "rootSigner": "0xEF8aD3361D233Ba0c0D8000333b090F55Ba7FC48",
+    "leiContext": "506700GE1G29325QX363",
+    "orcidReference": "0009-0002-7219-1363"
+  }
+}
