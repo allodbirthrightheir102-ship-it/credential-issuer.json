@@ -10,7 +10,7 @@
 ### 💰 Tier 1 Asset Reserves
 - **Asset Class:** 100% Gold / 100% Silver (Molecularly Verified)
 - **Asset ID:** \`IMPERI-BERIT-SUITE-001\`
-- **XP MAXIMA Limit:** \$120,000,000,000,000,000.00 USD
+- **XP MAXIMA Limit:** \$120,000,000,000,000,000.00 USD ($3,210,812,978,488.92 USD per diem stable flow velocity matrix)
 - **Anchor:** \`AR-BLOCK-1902192-FINAL\`
 
 ### 🛡️ Verification Protocol
