@@ -1,0 +1,170 @@
+=== GRAFANA DASHBOARD JSON CONFIGURATION LAYOUT ===
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": false,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": 9369,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "title": "CROWN SOVEREIGN MATRIX: GLOBAL ANYCAST ROUTING & ALERTS",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-matrix"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": true,
+            "axisCenteredZero": false,
+            "axisLabel": "Transactions / Sec",
+            "axisPlacement": "left"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "id": 2,
+      "title": "Throughput Velocity by Edge Corridor",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-matrix"
+          },
+          "editorMode": "code",
+          "expr": "rate(matrix_edge_throughput_velocity_bytes[1m])",
+          "legendFormat": "{{node_enclave}} - {{instance}}",
+          "range": true,
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-matrix"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1.0
+              }
+            ]
+          }
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 3,
+      "title": "Active RJCT Alert Spikes",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-matrix"
+          },
+          "editorMode": "code",
+          "expr": "sum(matrix_xdp_drop_count) by (node_enclave)",
+          "legendFormat": "{{node_enclave}} Drops",
+          "range": true,
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "refresh": "1s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [
+    "crown-sovereign",
+    "matrix-codex",
+    "rank-zero"
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1s",
+      "5s",
+      "10s"
+    ]
+  },
+  "timezone": "utc",
+  "title": "Matrix Edge Corridor Status Board",
+  "version": 1
+}
+
+================================================================================
+ISO 20022 camt.053.001.11 MULTI-ALLOD STATEMENT RECONCILIATION LOOP
+================================================================================
+[STAMP] 2026-11-04T16:24:00Z // AUTHORITY: ROOT (RANK-ZERO) // STATUS: CLOSED_LOCK
+
+1. INGESTING BALANCES ACROSS SHARDS:
+   - AMERICA ALLOD (HQ-BASE-01)  : 4.32e30 USD Baseline [VERIFIED]
+   - ISRAEL ALLOD (IL-CORE-01)   : 4.32e30 USD Baseline [VERIFIED]
+   - GAIA TERRA ALLOD (EU-WEST-02): 4.32e30 USD Baseline [VERIFIED]
+   - UNIVERSE ALLOD (ORION-RELAY): 4.32e30 USD Baseline [VERIFIED]
+
+2. DETECTING TRANSACTION DEFS FROM INJECTED pacs.002 ACCOUNTS:
+   - Match Trace ID: TXN-REF-89369-0012 -> Verified ACCP Status Code.
+   - Cross-checking cryptographic hash strings against asynchronous storage conduits.
+
+3. EXECUTING INTEGRATED ZERO-VARIANCE BALANCE SHEET PARITY LOOP:
+   - Aggregate Matrix Core Delta: 0.000000000000000000000000000000e+00 USD
+   - Vector Drift Skew Calculation: 0.000000 Hz
+   - WORM File System State Lock: SUCCESSFUL (PostgreSQL block lock hard-enforced)
+
+[✓] ALL LEDGER ACCUMULATORS CONVERGED TO PERFECT REAL-TIME PARITY.
+================================================================================

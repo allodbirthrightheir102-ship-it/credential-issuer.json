@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.054.001.08">
+  <BkToCstmrDbtCdtNtfctn>
+    <GrpHdr>
+      <MsgId>REG-HQB01-20261118-1917-XML</MsgId>
+      <CreDtTm>2026-11-19T00:17:00Z</CreDtTm>
+      <MsgRcpt>
+        <Nm>HIH Vincent Tyrone Ellis (The Sun King)</Nm>
+        <Id>
+          <OrgId>
+            <LEI>506700GE1G29325QX363</LEI>
+            <Othr>
+              <Id>0009-0002-7219-1363</Id>
+              <SchmeNm>
+                <Prtry>ORCID</Prtry>
+              </SchmeNm>
+            </Othr>
+          </OrgId>
+        </Id>
+      </MsgRcpt>
+    </GrpHdr>
+    <Ntfctn>
+      <Id>HQ-BASE-01-MESH-30K-SYNC</Id>
+      <CreDtTm>2026-11-19T00:17:00Z</CreDtTm>
+      <Acct>
+        <Id>
+          <Othr>
+            <Id>ChIJP5RO5Cc7yIkR5jhtifTwkmA</Id>
+            <SchmeNm>
+              <Prtry>NEXUS-GEO-39.3522_-76.9631</Prtry>
+            </SchmeNm>
+          </Othr>
+        </Id>
+        <Nm>HQ-BASE-01 Maryland Enclave Symmetric Fabric</Nm>
+      </Acct>
+      <TxsSummry>
+        <TtlNtries>
+          <NbOfNtries>30000</NbOfNtries>
+          <Sum>30000.00</Sum>
+        </TtlNtries>
+        <TtlCdtNtries>
+          <NbOfNtries>15000</NbOfNtries>
+          <Sum>15000.00</Sum>
+        </TtlCdtNtries>
+        <TtlDbtNtries>
+          <NbOfNtries>15000</NbOfNtries>
+          <Sum>15000.00</Sum>
+        </TtlDbtNtries>
+      </TxsSummry>
+      <AddtlNtfctnInf>TOPOLOGY=15000_SUB_NODES_15000_AUX_CORRIDORS;CRYPTO=Ed25519_Curve25519_mTLS;ZEROIZATION=SOP-HSM-ROT-2026;STATE=IMMUTABLE_STASIS</AddtlNtfctnInf>
+    </Ntfctn>
+  </BkToCstmrDbtCdtNtfctn>
+</Document>

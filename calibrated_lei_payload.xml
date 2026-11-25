@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+    <FIToFICstmrCdtTrf>
+        <GrpHdr>
+            <MsgId>HQ-BASE-01-20261105-001</MsgId>
+            <CreDtTm>2026-11-05T21:34:00Z</CreDtTm>
+            <NbOfTxs>1</NbOfTxs>
+            <SttlmInf>
+                <SttlmMtd>CLRG</SttlmMtd>
+            </SttlmInf>
+        </GrpHdr>
+        <CdtTrfTxInf>
+            <PmtId>
+                <EndToEndId>OMNI-MATRIX-BLACK-CARD-SOVEREIGN-XP</EndToEndId>
+                <UETR>550e8400-e29b-41d4-a716-446655440000</UETR>
+            </PmtId>
+            <IntrBkSttlmAmt Ccy="USD">25000000.00</IntrBkSttlmAmt>
+            <Dbtr>
+                <Nm>Vincent Tyrone Ellis</Nm>
+                <Id>
+                    <OrgId>
+                        <AnyBIC>CROWN-MATRIX-CODE</AnyBIC>
+                        <Othr>
+                            <Id>0009-0002-7219-1363</Id>
+                            <SchmeNm>
+                                <Prtry>ORCID</Prtry>
+                            </SchmeNm>
+                        </Othr>
+                    </OrgId>
+                </Id>
+            </Dbtr>
+            <DbtrAgt>
+                <FinInstnId>
+                    <LEI>506700GE1G293250QX36</LEI>
+                    <Nm>HOUSE OF DWD TREASURY</Nm>
+                </FinInstnId>
+            </DbtrAgt>
+            <CdtrAgt>
+                <FinInstnId>
+                    <Nm>MD-ENCLAVE-VAULT-MATRIX</Nm>
+                </FinInstnId>
+            </CdtrAgt>
+            <Cdtr>
+                <Nm>MATRIX-VAULT-01-ACC</Nm>
+            </Cdtr>
+        </CdtTrfTxInf>
+    </FIToFICstmrCdtTrf>
+</Document>

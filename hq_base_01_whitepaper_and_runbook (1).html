@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HQ-BASE-01 Architecture Whitepaper &amp; Companion Technical Runbook</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-alt: #f1f5f9;
+      --ink: #0f172a;
+      --muted: #475569;
+      --accent: #0f4c81;
+      --accent-soft: #e0eef9;
+      --border: #cbd5e1;
+      --code-bg: #0b1320;
+      --code-ink: #e2e8f0;
+      --warn-bg: #fffbeb;
+      --warn-border: #d97706;
+      --ok-bg: #ecfdf5;
+      --ok-border: #059669;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      line-height: 1.62;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    .page-shell {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 32px 24px 72px;
+    }
+
+    header.doc-header {
+      background: linear-gradient(135deg, #0b2545 0%, #0f4c81 60%, #136f63 100%);
+      color: #ffffff;
+      padding: 36px 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+      margin-bottom: 28px;
+    }
+
+    .doc-kicker {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bae6fd;
+      margin-bottom: 8px;
+    }
+
+    header.doc-header h1 {
+      margin: 0 0 12px;
+      font-size: 2rem;
+      line-height: 1.2;
+      font-weight: 800;
+    }
+
+    header.doc-header p.subtitle {
+      margin: 0 0 20px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      max-width: 78ch;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      font-size: 0.86rem;
+    }
+
+    .meta-item strong {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #93c5fd;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 28px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button.btn {
+      appearance: none;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 8px 14px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    button.btn-secondary {
+      background: #ffffff;
+      color: var(--accent);
+    }
+
+    nav.toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+
+    nav.toc h2 {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+    }
+
+    nav.toc ol {
+      margin: 0;
+      padding-left: 20px;
+      columns: 2;
+      column-gap: 32px;
+    }
+
+    nav.toc li {
+      margin-bottom: 6px;
+      font-size: 0.94rem;
+    }
+
+    nav.toc a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav.toc a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    section.card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    section.card h2 {
+      margin: 0 0 14px;
+      font-size: 1.45rem;
+      color: #0b2545;
+      border-bottom: 2px solid var(--accent-soft);
+      padding-bottom: 8px;
+    }
+
+    section.card h3 {
+      margin: 22px 0 10px;
+      font-size: 1.15rem;
+      color: var(--accent);
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul, ol {
+      margin: 0 0 14px;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.88em;
+      background: var(--surface-alt);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #0f172a;
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-ink);
+      padding: 18px 20px;
+      border-radius: 9px;
+      overflow-x: auto;
+      font-size: 0.83rem;
+      line-height: 1.5;
+      margin: 14px 0 18px;
+    }
+
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 20px;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface-alt);
+      font-weight: 700;
+      color: #0b2545;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+
+    .callout.warn {
+      border-left-color: var(--warn-border);
+      background: var(--warn-bg);
+    }
+
+    .callout.ok {
+      border-left-color: var(--ok-border);
+      background: var(--ok-bg);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    @media (max-width: 720px) {
+      nav.toc ol {
+        columns: 1;
+      }
+      section.card {
+        padding: 20px 18px;
+      }
+      header.doc-header {
+        padding: 24px 20px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+      .toolbar {
+        display: none;
+      }
+      section.card, header.doc-header, nav.toc {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="doc-header">
+      <div class="doc-kicker">HQ-BASE-01 Trust &amp; Integrity Engineering</div>
+      <h1>Architecture Whitepaper &amp; Companion Technical Runbook</h1>
+      <p class="subtitle">
+        End-to-End Cryptographic Attestation, Monotonic EMV Counter Enforcement, WORM Checkpoint Chain Verification,
+        Durable Superseding Ledgers, and Fail-Closed PostgreSQL Operations
+      </p>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Document ID</strong>HQ-BASE-01-WP-RB-2026.1</div>
+        <div class="meta-item"><strong>Effective Date</strong>2026-11-25</div>
+        <div class="meta-item"><strong>Primary Suite</strong>pg-combined-e2e-live.test.ts</div>
+        <div class="meta-item"><strong>Runner Entrypoint</strong>run-live-test.mjs</div>
+        <div class="meta-item"><strong>Persistence Engine</strong>PostgreSQL (SERIALIZABLE)</div>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <div>
+        <strong>Document Format &amp; Conversion:</strong> Self-contained HTML/CSS whitepaper and technical runbook.
+        Use <em>Print / Save as PDF</em> for PDF export, or convert offline with LibreOffice / Pandoc for DOCX.
+      </div>
+      <div class="toolbar-actions">
+        <button class="btn" type="button" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn btn-secondary" type="button" onclick="toggleAllDetails(true)">Expand Notes</button>
+      </div>
+    </div>
+
+    <nav class="toc" aria-label="Table of Contents">
+      <h2>Table of Contents</h2>
+      <ol>
+        <li><a href="#sec-1">Executive Summary &amp; Design Philosophy</a></li>
+        <li><a href="#sec-2">System Architecture &amp; Subsystem Topology</a></li>
+        <li><a href="#sec-3">Combined Live PostgreSQL E2E Test (pg-combined-e2e-live.test.ts)</a></li>
+        <li><a href="#sec-4">Test Runner Integration (run-live-test.mjs)</a></li>
+        <li><a href="#sec-5">Subsystem 1: Transactional Client &amp; Serialization Retry</a></li>
+        <li><a href="#sec-6">Subsystem 2: Fail-Closed EMV Monotonic Counter &amp; Reconciliation</a></li>
+        <li><a href="#sec-7">Subsystem 3: Hybrid Atomic Replay &amp; Nonce Guard</a></li>
+        <li><a href="#sec-8">Subsystem 4: WORM Checkpoint Chain &amp; Attestation Resolution</a></li>
+        <li><a href="#sec-9">Subsystem 5: Key Rollover, Superseding Ledger &amp; Revocation</a></li>
+        <li><a href="#sec-10">Incident Response, Observability &amp; Format Conversion</a></li>
+      </ol>
+    </nav>
+
+    <section class="card" id="sec-1">
+      <h2>1. Executive Summary &amp; Design Philosophy</h2>
+      <p>
+        The <strong>HQ-BASE-01</strong> trust fabric governs high-integrity state transitions across cryptographic
+        attestation envelopes, Write-Once-Read-Many (WORM) audit checkpoints, monotonic EMV chip counters, and
+        authority key lifecycle events. Rather than relying on best-effort retries or permissive defaults when backing
+        stores experience contention or partial unavailability, HQ-BASE-01 enforces <strong>fail-closed semantics</strong>
+        backed by <code>SERIALIZABLE</code> PostgreSQL transactions and domain-separated Ed25519 signatures.
+      </p>
+      <p>
+        This combined artifact provides both an architectural whitepaper and a multi-subsystem operational runbook.
+        Part I establishes the threat model, core invariants, and end-to-end verification flow executed by
+        <code>pg-combined-e2e-live.test.ts</code> and orchestrated by <code>run-live-test.mjs</code>. Part II details
+        step-by-step operational procedures, failure modes, diagnostic queries, and recovery playbooks for every
+        subsystem.
+      </p>
+      <div class="callout ok">
+        <span class="callout-title">Core Architectural Invariants</span>
+        <ul>
+          <li><strong>Monotonicity &amp; Max-Wins Reconciliation:</strong> Counter state never regresses; reconciliation elevates persistent or atomic state to the maximum observed counter without rolling back higher values.</li>
+          <li><strong>Fail-Closed Unreadiness:</strong> Guards refuse acceptance until readiness checks, atomic runners, and transactional stores are verified healthy.</li>
+          <li><strong>Domain-Separated Cryptographic Authority:</strong> Rollovers, attestations, superseding records, and revocations bind explicit domain tags and canonical preimages prior to Ed25519 verification.</li>
+          <li><strong>Durable Supersession &amp; Nonce Guarding:</strong> Corrective attestations persist durably in PostgreSQL and enforce single-use nonce/expiry semantics to block replay attacks.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card" id="sec-2">
+      <h2>2. System Architecture &amp; Subsystem Topology</h2>
+      <p>
+        HQ-BASE-01 separates protocol schema and signature verification from stateful persistence and atomic replay
+        enforcement while binding them together inside <code>ingestHqBase01Envelope</code> and
+        <code>resolveCheckpointAttestation</code>.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Module / Component</th>
+            <th>Responsibility</th>
+            <th>Failure Posture</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>hq-base-01-schema-gate.ts</code></td>
+            <td>Canonical hashing (<code>sha256CanonicalHex</code>), domain preimage construction (<code>buildDomainPreimage</code>), envelope types, and in-memory superseding ledger.</td>
+            <td>Rejects malformed schemas, mismatched domain tags, or invalid signatures.</td>
+          </tr>
+          <tr>
+            <td><code>pg-retry-transactional-client.ts</code></td>
+            <td>Wraps <code>pg.Pool</code> transactions with configurable isolation (<code>SERIALIZABLE</code>), statement timeouts, jittered backoff, and SQLSTATE <code>40001</code> retry handling.</td>
+            <td>Retries transient serialization conflicts up to budget; surfaces exhausted errors cleanly.</td>
+          </tr>
+          <tr>
+            <td><code>durable-ledger-and-replay.ts</code></td>
+            <td>Persists superseding attestations in <code>hq_superseding_attestations</code> and hydrates ledger snapshots for checkpoint resolution.</td>
+            <td>Fails transactionally if durable write or hydration query fails.</td>
+          </tr>
+          <tr>
+            <td><code>hybrid-fail-closed.ts</code></td>
+            <td>Evaluates atomic replay and time-bounded nonce scripts (<code>evalNonceScript</code>) to detect duplicate or expired nonces.</td>
+            <td>Rejects replays (<code>REPLAY_DETECTED</code>) or expired nonces; fails closed on runner faults.</td>
+          </tr>
+          <tr>
+            <td><code>emv-counter-warmup.ts</code>, <code>emv-counter-reconcile.ts</code>, <code>emv-dual-write-counter.ts</code></td>
+            <td>Initializes guard readiness, reconciles SQL (<code>hq_replay_counters</code>) and atomic counters using max-wins semantics, and advances monotonic EMV counters.</td>
+            <td>Blocks counter advancement when unready or when incoming counter is not strictly greater than current state.</td>
+          </tr>
+          <tr>
+            <td><code>hq-base-01-integration.ts</code></td>
+            <td>Coordinates envelope ingestion, key rollovers, WORM checkpoint chain verification (<code>verifyWormCheckpointChain</code>), key revocations, and attestation status resolution.</td>
+            <td>Rejects untrusted/revoked keys (<code>KEY_REVOKED</code>), broken hash links, or unverified digests.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="sec-3">
+      <h2>3. Combined Live PostgreSQL E2E Test (pg-combined-e2e-live.test.ts)</h2>
+      <p>
+        The combined end-to-end test exercises the full lifecycle against a live PostgreSQL instance (skipping
+        gracefully when PostgreSQL is unreachable) and cleans up synthetic rows in a <code>finally</code> block.
+      </p>
+      <ol>
+        <li><strong>Bootstrap &amp; Schema Setup:</strong> Connects via <code>DATABASE_URL</code> (defaulting to <code>postgres://postgres:postgres@127.0.0.1:5432/hq_base_01_test</code>), ensures <code>hq_replay_counters</code> and <code>hq_superseding_attestations</code> exist, instantiates <code>RetryingPgTransactionalClient</code> in <code>SERIALIZABLE</code> mode, and seeds an initial SQL counter of <code>30</code> alongside an atomic counter of <code>34</code>.</li>
+        <li><strong>Max-Wins Reconciliation &amp; Counter Advance:</strong> Runs <code>reconcileEmvCountersMaxWins</code> so the state elevates to <code>34</code> without regressing, marks the guard ready, and executes <code>advanceAndPersistEmvCounter</code> to advance to <code>35</code>.</li>
+        <li><strong>Key Rollover &amp; WORM Chain Verification:</strong> Signs a <code>hq-base-01.key-rollover.v1</code> record with the root authority key, ingests it via <code>ingestHqBase01Envelope</code>, constructs a two-node WORM checkpoint chain linked by SHA-256 digests, verifies it with <code>verifyWormCheckpointChain</code>, and confirms initial <code>ORIGINAL</code> resolution.</li>
+        <li><strong>Durable Superseding &amp; Nonce Replay Guard:</strong> Signs and ingests a <code>hq-base-01.superseding-attestation.v1</code> envelope with a bounded nonce window (<code>ACCEPTED_AND_PERSISTED</code>), replays the identical nonce parameters to verify rejection (<code>REPLAY_DETECTED</code>), hydrates from PostgreSQL via <code>DurableSupersedingStore.loadLedgerSnapshot</code>, and verifies <code>SUPERSEDED</code> status.</li>
+        <li><strong>Key Revocation &amp; Post-Revocation Fail-Closed Check:</strong> Signs and ingests a <code>hq-base-01.key-revocation.v1</code> record targeting the delegated attestor key, then re-submits <code>attestation1</code> to verify it is rejected with <code>KEY_REVOKED</code>.</li>
+      </ol>
+      <pre><code>import test from "node:test";
+import assert from "node:assert/strict";
+import {
+  createHash,
+  createPrivateKey,
+  generateKeyPairSync,
+  sign as cryptoSign,
+} from "node:crypto";
+import { Pool } from "pg";
+import {
+  buildDomainPreimage,
+  createSupersedingLedger,
+  sha256CanonicalHex,
+  type AttestationEnvelope,
+  type JsonValue,
+  type KeyRevocationRecord,
+  type KeyRolloverRecord,
+  type KeyStateStore,
+  type SupersedingAttestationEnvelope,
+} from "./hq-base-01-schema-gate.js";
+import {
+  DurableSupersedingStore,
+  type TransactionalClient,
+} from "./durable-ledger-and-replay.js";
+import { RetryingPgTransactionalClient } from "./pg-retry-transactional-client.js";
+import {
+  HybridAtomicReplayGuard,
+  type AtomicScriptRunner,
+} from "./hybrid-fail-closed.js";
+import {
+  FailClosedEmvCounterGuard,
+  type AtomicCounterSeedRunner,
+} from "./emv-counter-warmup.js";
+import { reconcileEmvCountersMaxWins } from "./emv-counter-reconcile.js";
+import { advanceAndPersistEmvCounter } from "./emv-dual-write-counter.js";
+import {
+  ingestHqBase01Envelope,
+  resolveCheckpointAttestation,
+  verifyWormCheckpointChain,
+  type HqBase01RuntimeServices,
+  type WormCheckpointNode,
+} from "./hq-base-01-integration.js";
+
+const LIVE_E2E_DDL = `
+CREATE TABLE IF NOT EXISTS hq_replay_counters (
+  seq_key                  TEXT PRIMARY KEY,
+  channel                  TEXT NOT NULL CHECK (channel IN ('emv_chip')),
+  instrument_id            TEXT NOT NULL,
+  highest_accepted_counter BIGINT NOT NULL CHECK (highest_accepted_counter &gt;= 0),
+  updated_at_ms            BIGINT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS hq_superseding_attestations (
+  attestation_id         TEXT PRIMARY KEY,
+  target_checkpoint_id   TEXT NOT NULL,
+  target_attestation_id  TEXT NOT NULL,
+  issued_at_ms           BIGINT NOT NULL,
+  envelope_json          JSONB NOT NULL,
+  recorded_at_ms         BIGINT NOT NULL
+);
+`;
+
+function makeKeypair() {
+  const { publicKey, privateKey } = generateKeyPairSync("ed25519");
+  const spki = publicKey.export({ format: "der", type: "spki" }) as Buffer;
+  return {
+    publicKeyHex: spki.subarray(spki.length - 32).toString("hex"),
+    privateKey,
+  };
+}
+
+function signPreimage(
+  privateKey: ReturnType&lt;typeof createPrivateKey&gt;,
+  tag: string,
+  payload: JsonValue
+): string {
+  return cryptoSign(null, buildDomainPreimage(tag, payload), privateKey).toString("hex");
+}
+
+test("combined live PostgreSQL E2E flow: reconciliation, EMV counters, WORM chain, superseding, revocation, and resolution", async (t) =&gt; {
+  const connectionString =
+    process.env.DATABASE_URL ??
+    "postgres://postgres:postgres@127.0.0.1:5432/hq_base_01_test";
+
+  const pool = new Pool({
+    connectionString,
+    connectionTimeoutMillis: 2_000,
+  });
+
+  try {
+    await pool.query("SELECT 1");
+  } catch (err) {
+    await pool.end().catch(() =&gt; {});
+    t.skip(
+      `PostgreSQL unreachable at ${connectionString} (${err instanceof Error ? err.message : "connection error"})`
+    );
+    return;
+  }
+
+  const tag = `e2e-${Date.now()}`;
+  const instrumentId = `card-${tag}`;
+  const seqKey = `replay:seq:emv_chip:${instrumentId}`;
+  const ckptId1 = `ckpt-${tag}-01`;
+  const ckptId2 = `ckpt-${tag}-02`;
+  const attId1 = `att-${tag}-01`;
+  const supAttId = `att-sup-${tag}-01`;
+  const t0 = 1_795_595_600_000;
+
+  try {
+    await pool.query(LIVE_E2E_DDL);
+
+    const db: TransactionalClient = new RetryingPgTransactionalClient(
+      pool,
+      { isolationLevel: "SERIALIZABLE", statementTimeoutMs: 5_000 },
+      { maxRetries: 3, baseDelayMs: 10, maxDelayMs: 50, jitterRatio: 0.1 }
+    );
+
+    await db.withTransaction(async (tx) =&gt; {
+      await tx.query(
+        `INSERT INTO hq_replay_counters (
+           seq_key, channel, instrument_id, highest_accepted_counter, updated_at_ms
+         ) VALUES ($1, 'emv_chip', $2, 30, $3)`,
+        [seqKey, instrumentId, t0]
+      );
+    });
+
+    const atomicCounters = new Map&lt;string, number&gt;([[seqKey, 34]]);
+    const seenNonces = new Map&lt;string, number&gt;();
+
+    const atomicRunner: AtomicCounterSeedRunner &amp; AtomicScriptRunner = {
+      async getCounter(key) {
+        return atomicCounters.get(key) ?? null;
+      },
+      async seedOrRaiseCounter(key, counter) {
+        const cur = atomicCounters.get(key);
+        if (cur === undefined || counter &gt; cur) {
+          atomicCounters.set(key, counter);
+          return true;
+        }
+        return false;
+      },
+      async evalCounterScript(key, incomingCounter) {
+        const cur = atomicCounters.get(key) ?? 0;
+        if (incomingCounter &lt;= cur) return 2;
+        atomicCounters.set(key, incomingCounter);
+        return 1;
+      },
+      async evalNonceScript(key, nowMs, expiresAtMs) {
+        if (nowMs &gt; expiresAtMs) return 3;
+        const exp = seenNonces.get(key);
+        if (exp !== undefined &amp;&amp; exp &gt;= nowMs) return 2;
+        seenNonces.set(key, expiresAtMs);
+        return 1;
+      },
+    };
+
+    const root = makeKeypair();
+    const store: KeyStateStore = {
+      trustedAuthorities: new Map([
+        [
+          "root-authority-01",
+          {
+            public_key_hex: root.publicKeyHex,
+            roles: ["root_authority", "epoch_admin", "security_officer"],
+          },
+        ],
+      ]),
+      delegatedKeys: new Map(),
+      revocations: new Map(),
+    };
+
+    const inMemoryLedger = createSupersedingLedger();
+    const durableLedger = new DurableSupersedingStore(db);
+    const replayGuard = new HybridAtomicReplayGuard(atomicRunner);
+    const emvGuard = new FailClosedEmvCounterGuard(db, atomicRunner);
+
+    const services: HqBase01RuntimeServices = {
+      store,
+      inMemoryLedger,
+      durableLedger,
+      replayGuard,
+      emvGuard,
+      atomicRunner,
+      db,
+    };
+
+    // 1. Reconcile max-wins (SQL 30 -&gt; 34 without rollback) and advance to 35
+    const recon = await reconcileEmvCountersMaxWins({
+      guard: emvGuard,
+      db,
+      atomic: atomicRunner,
+      nowMs: t0 + 1_000,
+    });
+    assert.equal(recon.reconciled, true);
+    assert.equal(emvGuard.isReady(), true);
+
+    const adv = await advanceAndPersistEmvCounter({
+      guard: emvGuard,
+      db,
+      instrumentId,
+      incomingCounter: 35,
+      nowMs: t0 + 2_000,
+    });
+    assert.equal(adv.accepted, true);
+    assert.equal(adv.persistedCounter, 35);
+
+    // 2. Rollover attestor key &amp; verify WORM chain
+    const attestor = makeKeypair();
+    const rollover: KeyRolloverRecord = {
+      schema: "hq-base-01.key-rollover.v1",
+      record_id: `roll-${tag}`,
+      issued_at: "2026-11-25T14:00:00Z",
+      authority: {
+        key_id: "root-authority-01",
+        public_key_hex: root.publicKeyHex,
+        role: "root_authority",
+      },
+      rollover: {
+        outgoing_key_id: `att-prev-${tag}`,
+        incoming_key_id: `att-curr-${tag}`,
+        incoming_public_key_hex: attestor.publicKeyHex,
+        role: "checkpoint_attestor",
+        domain_scope: ["us-md-hq-base-01"],
+        epoch_start: 100,
+        epoch_end: 120,
+        grace_epochs: 2,
+      },
+      signature: {
+        algorithm: "Ed25519",
+        domain_separation_tag: "hq-base-01.key-rollover.v1",
+        sig_hex: "",
+      },
+    };
+    rollover.signature.sig_hex = signPreimage(
+      root.privateKey,
+      rollover.signature.domain_separation_tag,
+      {
+        schema: rollover.schema,
+        record_id: rollover.record_id,
+        issued_at: rollover.issued_at,
+        authority: rollover.authority as unknown as JsonValue,
+        rollover: rollover.rollover as unknown as JsonValue,
+        signature: {
+          algorithm: rollover.signature.algorithm,
+          domain_separation_tag: rollover.signature.domain_separation_tag,
+        },
+      }
+    );
+
+    const rollOut = await ingestHqBase01Envelope({
+      record: rollover,
+      services,
+      dispatchContext: {},
+    });
+    assert.equal(rollOut.accepted, true);
+
+    const payload1 = Buffer.from(`payload-${ckptId1}`, "utf8");
+    const digest1 = createHash("sha256").update(payload1).digest("hex");
+    const payload2 = Buffer.from(`payload-${ckptId2}`, "utf8");
+    const digest2 = createHash("sha256").update(payload2).digest("hex");
+    const regDigest = sha256CanonicalHex({ domain: "us-md-hq-base-01", tag });
+
+    const attestation1: AttestationEnvelope = {
+      envelope_version: "1.0",
+      schema: "hq-base-01.attestation-envelope.v1",
+      attestation_id: attId1,
+      issued_at: "2026-11-25T14:01:00Z",
+      signer: {
+        key_id: `att-curr-${tag}`,
+        public_key_hex: attestor.publicKeyHex,
+        role: "checkpoint_attestor",
+      },
+      claims: {
+        registry_schema: "hq-base-01.registry-domain.v1",
+        domain_id: "us-md-hq-base-01",
+        registry_digest_sha256: regDigest,
+        worm_checkpoint: {
+          checkpoint_id: ckptId1,
+          worm_object_uri: `worm://hq-base-01-audit/2026/11/25/${ckptId1}.cbor`,
+          checkpoint_digest_sha256: digest1,
+          prev_checkpoint_digest_sha256: "00".repeat(32),
+          consensus_epoch: 100,
+          finalized_at: "2026-11-25T14:00:55Z",
+        },
+      },
+      signature: {
+        algorithm: "Ed25519",
+        domain_separation_tag: "hq-base-01.attestation-envelope.v1",
+        sig_hex: "",
+      },
+    };
+    attestation1.signature.sig_hex = signPreimage(
+      attestor.privateKey,
+      attestation1.signature.domain_separation_tag,
+      attestation1.claims as unknown as JsonValue
+    );
+
+    const chain: WormCheckpointNode[] = [
+      {
+        checkpoint_id: ckptId1,
+        worm_object_uri: `worm://hq-base-01-audit/2026/11/25/${ckptId1}.cbor`,
+        checkpoint_digest_sha256: digest1,
+        prev_checkpoint_digest_sha256: "00".repeat(32),
+        consensus_epoch: 100,
+        finalized_at: "2026-11-25T14:00:55Z",
+        raw_payload_bytes: payload1,
+        attestation: attestation1,
+      },
+      {
+        checkpoint_id: ckptId2,
+        worm_object_uri: `worm://hq-base-01-audit/2026/11/25/${ckptId2}.cbor`,
+        checkpoint_digest_sha256: digest2,
+        prev_checkpoint_digest_sha256: digest1,
+        consensus_epoch: 101,
+        finalized_at: "2026-11-25T14:02:00Z",
+        raw_payload_bytes: payload2,
+      },
+    ];
+
+    const chainRes = verifyWormCheckpointChain({ checkpoints: chain, store });
+    assert.equal(chainRes.valid, true);
+
+    assert.equal(
+      resolveCheckpointAttestation({
+        ledger: inMemoryLedger,
+        checkpointId: ckptId1,
+        attestationId: attId1,
+        originalExists: true,
+      }).status,
+      "ORIGINAL"
+    );
+
+    // 3. Ingest superseding attestation durably into Postgres + reject nonce replay
+    const correctiveDigest = "bb".repeat(32);
+    const superseding: SupersedingAttestationEnvelope = {
+      envelope_version: "1.0",
+      schema: "hq-base-01.superseding-attestation.v1",
+      attestation_id: supAttId,
+      issued_at: "2026-11-25T14:03:00Z",
+      signer: {
+        key_id: `att-curr-${tag}`,
+        public_key_hex: attestor.publicKeyHex,
+        role: "checkpoint_attestor",
+      },
+      supersedes: {
+        target_attestation_id: attId1,
+        target_checkpoint_id: ckptId1,
+        target_checkpoint_digest_sha256: digest1,
+        disposition: "state_corrected",
+        audit_reason: "ledger_reconciliation",
+      },
+      claims: {
+        registry_schema: "hq-base-01.registry-domain.v1",
+        domain_id: "us-md-hq-base-01",
+        registry_digest_sha256: regDigest,
+        corrective_worm_checkpoint: {
+          checkpoint_id: `${ckptId1}-sup-01`,
+          worm_object_uri: `worm://hq-base-01-audit/2026/11/25/${ckptId1}-sup-01.cbor`,
+          checkpoint_digest_sha256: correctiveDigest,
+          prev_checkpoint_digest_sha256: "00".repeat(32),
+          consensus_epoch: 100,
+          finalized_at: "2026-11-25T14:02:55Z",
+        },
+      },
+      signature: {
+        algorithm: "Ed25519",
+        domain_separation_tag: "hq-base-01.superseding-attestation.v1",
+        sig_hex: "",
+      },
+    };
+    superseding.signature.sig_hex = signPreimage(
+      attestor.privateKey,
+      superseding.signature.domain_separation_tag,
+      {
+        envelope_version: superseding.envelope_version,
+        schema: superseding.schema,
+        attestation_id: superseding.attestation_id,
+        issued_at: superseding.issued_at,
+        signer: superseding.signer as unknown as JsonValue,
+        supersedes: superseding.supersedes as unknown as JsonValue,
+        claims: superseding.claims as unknown as JsonValue,
+        signature: {
+          algorithm: superseding.signature.algorithm,
+          domain_separation_tag: superseding.signature.domain_separation_tag,
+        },
+      }
+    );
+
+    const nonceParams = {
+      channel: "qr" as const,
+      domainId: "us-md-hq-base-01",
+      subjectId: `auditor-${tag}`,
+      nonceOrId: `nonce-${tag}`,
+      contextHash: createHash("sha256").update(supAttId).digest("hex"),
+      nowMs: t0 + 10_000,
+      expiresAtMs: t0 + 70_000,
+    };
+
+    const supOk = await ingestHqBase01Envelope({
+      record: superseding,
+      services,
+      dispatchContext: {
+        expectedRegistryDigestHex: regDigest,
+        expectedCorrectiveWormDigestHex: correctiveDigest,
+        expectedPrevWormDigestHex: "00".repeat(32),
+      },
+      nonceParams,
+    });
+    assert.equal(supOk.accepted, true);
+    assert.equal(supOk.code, "ACCEPTED_AND_PERSISTED");
+
+    const supDup = await ingestHqBase01Envelope({
+      record: superseding,
+      services,
+      dispatchContext: {
+        expectedRegistryDigestHex: regDigest,
+        expectedCorrectiveWormDigestHex: correctiveDigest,
+        expectedPrevWormDigestHex: "00".repeat(32),
+      },
+      nonceParams,
+    });
+    assert.equal(supDup.accepted, false);
+    assert.equal(supDup.code, "REPLAY_DETECTED");
+
+    // Hydrate from Postgres and confirm SUPERSEDED resolution
+    const hydrated = await durableLedger.loadLedgerSnapshot({ checkpointId: ckptId1 });
+    assert.equal(
+      resolveCheckpointAttestation({
+        ledger: hydrated,
+        checkpointId: ckptId1,
+        attestationId: attId1,
+        originalExists: true,
+      }).status,
+      "SUPERSEDED"
+    );
+
+    // 4. Revoke attestor key and verify subsequent attestation fails closed
+    const revocation: KeyRevocationRecord = {
+      schema: "hq-base-01.key-revocation.v1",
+      revocation_id: `rev-${tag}`,
+      issued_at: "2026-11-25T14:04:00Z",
+      authority: {
+        key_id: "root-authority-01",
+        public_key_hex: root.publicKeyHex,
+        role: "security_officer",
+      },
+      revocation: {
+        target_key_id: `att-curr-${tag}`,
+        target_public_key_hex: attestor.publicKeyHex,
+        reason: "policy_violation",
+        effective_epoch: 100,
+        revoked_at: "2026-11-25T14:04:00Z",
+      },
+      signature: {
+        algorithm: "Ed25519",
+        domain_separation_tag: "hq-base-01.key-revocation.v1",
+        sig_hex: "",
+      },
+    };
+    revocation.signature.sig_hex = signPreimage(
+      root.privateKey,
+      revocation.signature.domain_separation_tag,
+      {
+        schema: revocation.schema,
+        revocation_id: revocation.revocation_id,
+        issued_at: revocation.issued_at,
+        authority: revocation.authority as unknown as JsonValue,
+        revocation: revocation.revocation as unknown as JsonValue,
+        signature: {
+          algorithm: revocation.signature.algorithm,
+          domain_separation_tag: revocation.signature.domain_separation_tag,
+        },
+      }
+    );
+
+    const revOut = await ingestHqBase01Envelope({
+      record: revocation,
+      services,
+      dispatchContext: {},
+    });
+    assert.equal(revOut.accepted, true);
+
+    const postRevokeAtt = await ingestHqBase01Envelope({
+      record: attestation1,
+      services,
+      dispatchContext: {
+        expectedRegistryDigestHex: regDigest,
+        expectedWormCheckpointDigestHex: digest1,
+        expectedPrevWormDigestHex: "00".repeat(32),
+      },
+    });
+    assert.equal(postRevokeAtt.accepted, false);
+    assert.equal(postRevokeAtt.code, "KEY_REVOKED");
+  } finally {
+    await pool
+      .query(`DELETE FROM hq_replay_counters WHERE seq_key = $1`, [seqKey])
+      .catch(() =&gt; {});
+    await pool
+      .query(`DELETE FROM hq_superseding_attestations WHERE attestation_id = $1`, [
+        supAttId,
+      ])
+      .catch(() =&gt; {});
+    await pool.end().catch(() =&gt; {});
+  }
+});</code></pre>
+    </section>
+
+    <section class="card" id="sec-4">
+      <h2>4. Test Runner Integration (run-live-test.mjs)</h2>
+      <p>
+        Include <code>pg-combined-e2e-live.test.ts</code> in the default suite array inside <code>run-live-test.mjs</code>
+        so CI pipelines and local verification runs execute the combined flow alongside integration and serialization
+        conflict suites.
+      </p>
+      <pre><code>const suites =
+  testTargets.length &gt; 0
+    ? testTargets
+    : [
+        "pg-live-integration.test.ts",
+        "pg-serializable-40001-live.test.ts",
+        "pg-combined-e2e-live.test.ts",
+      ];</code></pre>
+      <pre><code>export DATABASE_URL="postgres://postgres:postgres@127.0.0.1:5432/hq_base_01_test"
+node run-live-test.mjs</code></pre>
+      <div class="callout warn">
+        <span class="callout-title">Operational Precheck</span>
+        Ensure the target database exists and accepts connections on <code>127.0.0.1:5432</code> before invoking
+        <code>run-live-test.mjs</code>; otherwise the suite marks the live test skipped when connectivity fails.
+      </div>
+    </section>
+
+    <section class="card" id="sec-5">
+      <h2>5. Subsystem 1: Transactional Client &amp; Serialization Retry</h2>
+      <h3>Operational Scope</h3>
+      <p>
+        <code>RetryingPgTransactionalClient</code> executes transactional callbacks under PostgreSQL
+        <code>SERIALIZABLE</code> isolation with bounded statement timeouts and retries serialization failures
+        (<code>SQLSTATE 40001</code>) using exponential backoff and jitter.
+      </p>
+      <h3>Runbook Procedures</h3>
+      <ul>
+        <li><strong>Health &amp; Connection Check:</strong> Verify <code>SELECT 1</code> latency and active connection pool utilization before starting high-concurrency ingestion.</li>
+        <li><strong>Serialization Contention Tuning:</strong> Adjust <code>maxRetries</code>, <code>baseDelayMs</code>, <code>maxDelayMs</code>, and <code>jitterRatio</code> when hot-key contention spikes.</li>
+        <li><strong>Diagnostic Query:</strong> Inspect long-running or blocked transactions in PostgreSQL:
+          <pre><code>SELECT pid, state, wait_event_type, wait_event, now() - query_start AS age, query
+FROM pg_stat_activity
+WHERE datname = current_database() AND state &lt;&gt; 'idle'
+ORDER BY age DESC;</code></pre>
+        </li>
+      </ul>
+    </section>
+
+    <section class="card" id="sec-6">
+      <h2>6. Subsystem 2: Fail-Closed EMV Monotonic Counter &amp; Reconciliation</h2>
+      <h3>Operational Scope</h3>
+      <p>
+        <code>FailClosedEmvCounterGuard</code>, <code>reconcileEmvCountersMaxWins</code>, and
+        <code>advanceAndPersistEmvCounter</code> maintain strictly monotonic EMV chip sequence counters across
+        <code>hq_replay_counters</code> and the atomic counter store.
+      </p>
+      <h3>Runbook Procedures</h3>
+      <ul>
+        <li><strong>Reconciliation on Startup or Drift:</strong> Execute <code>reconcileEmvCountersMaxWins</code> so lower counters (e.g., SQL <code>30</code>) are raised to the higher atomic value (e.g., <code>34</code>) without rolling back higher counters.</li>
+        <li><strong>Counter Advancement:</strong> Call <code>advanceAndPersistEmvCounter</code> only when <code>emvGuard.isReady()</code> is <code>true</code> and <code>incomingCounter</code> exceeds the current accepted counter.</li>
+        <li><strong>Inspect Counter Rows:</strong>
+          <pre><code>SELECT seq_key, instrument_id, highest_accepted_counter, updated_at_ms
+FROM hq_replay_counters
+ORDER BY updated_at_ms DESC
+LIMIT 50;</code></pre>
+        </li>
+      </ul>
+    </section>
+
+    <section class="card" id="sec-7">
+      <h2>7. Subsystem 3: Hybrid Atomic Replay &amp; Nonce Guard</h2>
+      <h3>Operational Scope</h3>
+      <p>
+        <code>HybridAtomicReplayGuard</code> evaluates atomic nonce scripts (<code>evalNonceScript</code>) using
+        <code>channel</code>, <code>domainId</code>, <code>subjectId</code>, <code>nonceOrId</code>,
+        <code>contextHash</code>, <code>nowMs</code>, and <code>expiresAtMs</code>.
+      </p>
+      <h3>Runbook Procedures</h3>
+      <ul>
+        <li><strong>Duplicate / Replay Investigation:</strong> When ingestion returns <code>REPLAY_DETECTED</code>, verify whether the client retried with the same <code>nonceOrId</code> and <code>contextHash</code> within the active TTL window.</li>
+        <li><strong>Clock &amp; Expiry Verification:</strong> Confirm <code>nowMs &lt;= expiresAtMs</code> across application nodes so valid nonces are not prematurely expired due to clock skew.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="sec-8">
+      <h2>8. Subsystem 4: WORM Checkpoint Chain &amp; Attestation Resolution</h2>
+      <h3>Operational Scope</h3>
+      <p>
+        <code>verifyWormCheckpointChain</code> validates sequential checkpoint links, SHA-256 payload/checkpoint digests,
+        and signer credentials across WORM checkpoint nodes, while <code>resolveCheckpointAttestation</code> determines
+        whether an attestation is <code>ORIGINAL</code> or <code>SUPERSEDED</code>.
+      </p>
+      <h3>Runbook Procedures</h3>
+      <ul>
+        <li><strong>Chain Integrity Audit:</strong> Verify that node <code>N+1</code> sets <code>prev_checkpoint_digest_sha256</code> equal to node <code>N</code>'s <code>checkpoint_digest_sha256</code> and that raw payload bytes hash to the declared digest.</li>
+        <li><strong>Status Resolution Check:</strong> Hydrate ledger state via <code>DurableSupersedingStore.loadLedgerSnapshot</code> before evaluating <code>resolveCheckpointAttestation</code> after restarts or failover.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="sec-9">
+      <h2>9. Subsystem 5: Key Rollover, Superseding Ledger &amp; Revocation</h2>
+      <h3>Operational Scope</h3>
+      <p>
+        <code>ingestHqBase01Envelope</code> processes <code>hq-base-01.key-rollover.v1</code>,
+        <code>hq-base-01.superseding-attestation.v1</code>, and <code>hq-base-01.key-revocation.v1</code> envelopes.
+      </p>
+      <h3>Runbook Procedures</h3>
+      <ul>
+        <li><strong>Key Rollover Execution:</strong> Sign the rollover preimage with an authorized root key, verify <code>domain_scope</code> and epoch bounds (<code>epoch_start</code>, <code>epoch_end</code>, <code>grace_epochs</code>), and confirm <code>accepted: true</code>.</li>
+        <li><strong>Superseding Attestation Audit:</strong> Verify durable persistence in <code>hq_superseding_attestations</code>:
+          <pre><code>SELECT attestation_id, target_checkpoint_id, target_attestation_id, issued_at_ms, recorded_at_ms
+FROM hq_superseding_attestations
+ORDER BY recorded_at_ms DESC
+LIMIT 50;</code></pre>
+        </li>
+        <li><strong>Emergency Key Revocation:</strong> Issue a <code>hq-base-01.key-revocation.v1</code> envelope signed by a <code>security_officer</code> or <code>root_authority</code> key; confirm subsequent attestations from the revoked key fail with <code>KEY_REVOKED</code>.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="sec-10">
+      <h2>10. Incident Response, Observability &amp; Format Conversion</h2>
+      <h3>Incident Response Triage Matrix</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Symptom / Code</th>
+            <th>Likely Cause</th>
+            <th>Immediate Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>REPLAY_DETECTED</code></td>
+            <td>Duplicate nonce or replay submission within TTL window.</td>
+            <td>Inspect client retry logic and nonce generation; reject duplicate if unauthorized.</td>
+          </tr>
+          <tr>
+            <td><code>KEY_REVOKED</code></td>
+            <td>Signer key was revoked by a key revocation record.</td>
+            <td>Rotate signer to an active delegated key via a valid key rollover envelope.</td>
+          </tr>
+          <tr>
+            <td>Counter advance rejected</td>
+            <td>Guard not ready or incoming counter <code>&lt;=</code> current counter.</td>
+            <td>Run <code>reconcileEmvCountersMaxWins</code> and inspect <code>hq_replay_counters</code>.</td>
+          </tr>
+          <tr>
+            <td><code>40001</code> serialization retries</td>
+            <td>Concurrent <code>SERIALIZABLE</code> transactions touching overlapping rows.</td>
+            <td>Check hot keys and lock waits in <code>pg_stat_activity</code>; tune retry backoff.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Exporting to PDF and DOCX</h3>
+      <p>
+        This HTML document is self-contained with print stylesheet rules. To export to <strong>PDF</strong>, click
+        <strong>Print / Save as PDF</strong> above (or press <code>Ctrl+P</code> / <code>Cmd+P</code>) and choose
+        <em>Save as PDF</em>. To convert <code>hq_base_01_whitepaper_and_runbook.html</code> into a
+        <strong>DOCX</strong> file locally, run either LibreOffice or Pandoc:
+      </p>
+      <pre><code>libreoffice --headless --convert-to docx hq_base_01_whitepaper_and_runbook.html
+# OR
+pandoc hq_base_01_whitepaper_and_runbook.html -o hq_base_01_whitepaper_and_runbook.docx</code></pre>
+    </section>
+  </div>
+
+  <script>
+    function toggleAllDetails() {
+      document.querySelectorAll(".callout").forEach((el) => {
+        el.style.boxShadow = el.style.boxShadow
+          ? ""
+          : "0 0 0 2px rgba(15, 76, 129, 0.25)";
+      });
+    }
+  </script>
+</body>
+</html>

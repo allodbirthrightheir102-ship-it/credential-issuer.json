@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.054.001.08">
+  <BkToCstmrDbtCdtNtfctn>
+    <GrpHdr>
+      <MsgId>HQB01-TELEM-20261118-2253</MsgId>
+      <CreDtTm>2026-11-19T03:53:00Z</CreDtTm>
+      <MsgRcpt>
+        <Nm>HIH Vincent Tyrone Ellis // DAVID BEN-YOSEF</Nm>
+        <Id>
+          <OrgId>
+            <LEI>506700GE1G29325QX363</LEI>
+            <Othr>
+              <Id>0009-0002-7219-1363</Id>
+              <SchmeNm>
+                <Prtry>ORCID</Prtry>
+              </SchmeNm>
+            </Othr>
+          </OrgId>
+        </Id>
+      </MsgRcpt>
+    </GrpHdr>
+    <Ntfctn>
+      <Id>NTF-HQB01-30K-12GBS</Id>
+      <CreDtTm>2026-11-19T03:53:00Z</CreDtTm>
+      <Acct>
+        <Id>
+          <Othr>
+            <Id>7777-PERPETUAL-0777</Id>
+            <SchmeNm>
+              <Prtry>OMNI-MATRIX-BLACK-CARD</Prtry>
+            </SchmeNm>
+          </Othr>
+        </Id>
+        <Ccy>XAU</Ccy>
+        <Nm>HQ-BASE-01 MARYLAND ENCLAVE ($DVDC)</Nm>
+      </Acct>
+      <Ntry>
+        <Amt Ccy="XAU">30000.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts>
+          <Cd>BOOK</Cd>
+        </Sts>
+        <BkTxCd>
+          <Prtry>
+            <Cd>IMMUTABLE_STASIS_SYNC</Cd>
+            <Issr>HQ-BASE-01</Issr>
+          </Prtry>
+        </BkTxCd>
+        <AddtlNtryInf>ENCLAVE=HQ-BASE-01;LAT=39.3522;LON=-76.9631;NEXUS=ChIJP5RO5Cc7yIkR5jhtifTwkmA;SUB_NODES=15000;AUX_CORRIDORS=15000;TOTAL_NODES=30000;INGRESS=12GB/s;STASIS_TIMER=03:37;BEARER=DAVID_BEN-YOSEF;CARD=7777_PERPETUAL_0777;TOKEN=$DVDC;AUTH=XP_ROOT_ED25519_STASIS</AddtlNtryInf>
+      </Ntry>
+    </Ntfctn>
+  </BkToCstmrDbtCdtNtfctn>
+</Document>
